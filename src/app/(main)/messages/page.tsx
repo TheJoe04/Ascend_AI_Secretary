@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,7 +33,7 @@ export default function MessagesPage() {
   const [totalItems, setTotalItems] = useState(0);
   const pageSize = 10;
 
-  const loadMessages = async () => {
+  const loadMessages = useCallback(async () => {
     try {
       const filters: FilterOptions = {
         search: search || undefined,
@@ -54,11 +54,11 @@ export default function MessagesPage() {
     } catch (err) {
       console.error("Failed to load messages:", err);
     }
-  };
+  }, [search, typeFilter, currentPage, list]);
 
   useEffect(() => {
     loadMessages();
-  }, [search, typeFilter, currentPage]);
+  }, [loadMessages]);
 
   const getTypeIcon = (type: string) => {
     switch (type) {

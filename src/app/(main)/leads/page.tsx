@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { PageHeader } from "@/components/shared/page-header";
 import { LeadScoreBadge } from "@/components/shared/lead-score-badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLeadsApi } from "@/lib/hooks/use-leads-api";
 import { Lead, FilterOptions, PaginationOptions } from "@/lib/types";
 import { formatDateTime, formatRelativeTime } from "@/lib/utils";
@@ -35,7 +35,7 @@ export default function LeadsPage() {
   const [totalItems, setTotalItems] = useState(0);
   const pageSize = 10;
 
-  const loadLeads = async () => {
+  const loadLeads = useCallback(async () => {
     try {
       const filters: FilterOptions = {
         search: search || undefined,
@@ -56,11 +56,11 @@ export default function LeadsPage() {
     } catch (err) {
       console.error("Failed to load leads:", err);
     }
-  };
+  }, [search, scoreFilter, currentPage, list]);
 
   useEffect(() => {
     loadLeads();
-  }, [search, scoreFilter, currentPage]);
+  }, [loadLeads]);
 
   const getConversionColor = (probability: number) => {
     if (probability >= 75) return "text-green-600";

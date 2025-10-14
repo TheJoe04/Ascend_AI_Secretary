@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkles, Mail, Lock, Smartphone } from "lucide-react";
+import { AscendLogo } from "@/components/logo/ascend-logo";
+import { Mail, Lock, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
@@ -40,14 +41,13 @@ export default function LoginPage() {
     <div className="space-y-6">
       {/* Logo */}
       <div className="flex justify-center">
-        <div className="flex items-center space-x-2">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-            <Sparkles className="h-7 w-7 text-primary-foreground" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold">Ascend AI</h1>
-            <p className="text-sm text-muted-foreground">Secretary</p>
-          </div>
+        <div className="text-center">
+          <AscendLogo 
+            size="lg"
+            showText={true}
+            className="text-primary mb-2"
+          />
+          <p className="text-sm text-muted-foreground">AI Secretary</p>
         </div>
       </div>
 
@@ -149,7 +149,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  We'll send you a verification code via email
+                  We&apos;ll send you a verification code via email
                 </p>
               </div>
             )}
@@ -169,7 +169,7 @@ export default function LoginPage() {
               Forgot your password?
             </button>
             <div className="text-xs text-muted-foreground">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <button className="text-primary hover:underline">
                 Contact your administrator
               </button>

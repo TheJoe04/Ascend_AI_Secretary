@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { PageHeader } from "@/components/shared/page-header";
 import { CallTranscriptModal } from "@/components/calls/call-transcript-modal";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ export default function CallsPage() {
   const [totalItems, setTotalItems] = useState(0);
   const pageSize = 10;
 
-  const loadCalls = async () => {
+  const loadCalls = useCallback(async () => {
     try {
       const filters: FilterOptions = {
         search: search || undefined,
@@ -60,11 +60,11 @@ export default function CallsPage() {
     } catch (err) {
       console.error("Failed to load calls:", err);
     }
-  };
+  }, [search, statusFilter, sentimentFilter, currentPage, list]);
 
   useEffect(() => {
     loadCalls();
-  }, [search, statusFilter, sentimentFilter, currentPage]);
+  }, [loadCalls]);
 
   const handleViewCall = (call: Call) => {
     setSelectedCall(call);

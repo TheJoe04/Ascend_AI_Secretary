@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Ascend AI Secretary',
   description: 'AI-powered secretary for modern businesses',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({

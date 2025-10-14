@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/lib/store/app-store";
+import { AscendLogo } from "@/components/logo/ascend-logo";
 import { 
   LayoutDashboard, 
   Phone, 
@@ -12,8 +13,7 @@ import {
   Users, 
   Settings, 
   ChevronLeft,
-  ChevronRight,
-  Sparkles
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -36,16 +36,11 @@ export function NavSidebar() {
     )}>
       {/* Logo */}
       <div className="flex h-16 items-center px-4 border-b">
-        <div className="flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Sparkles className="h-5 w-5 text-primary-foreground" />
-          </div>
-          {!sidebarCollapsed && (
-            <span className="text-lg font-bold text-foreground">
-              Ascend AI
-            </span>
-          )}
-        </div>
+        <AscendLogo 
+          size={sidebarCollapsed ? "sm" : "md"}
+          showText={!sidebarCollapsed}
+          className="text-primary"
+        />
       </div>
 
       {/* Toggle Button */}

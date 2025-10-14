@@ -279,6 +279,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       const aVal = a[sortBy as keyof Call];
       const bVal = b[sortBy as keyof Call];
       
+      if (aVal == null || bVal == null) return 0;
       if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
       if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
       return 0;
@@ -299,6 +300,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       const aVal = a[sortBy as keyof Message];
       const bVal = b[sortBy as keyof Message];
       
+      if (aVal == null || bVal == null) return 0;
       if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
       if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
       return 0;
@@ -319,6 +321,7 @@ export const useDataStore = create<DataState>((set, get) => ({
       const aVal = a[sortBy as keyof Lead];
       const bVal = b[sortBy as keyof Lead];
       
+      if (aVal == null || bVal == null) return 0;
       if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
       if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
       return 0;

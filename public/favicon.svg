@@ -1,0 +1,38 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100" height="100" rx="16" fill="#004AAD"/>
+  
+  <!-- Mountains -->
+  <path d="M20 65 L35 45 L50 55 L65 35 L80 65 Z" fill="#1a365d" stroke="#2d5a87" stroke-width="1"/>
+  
+  <!-- Sun rays -->
+  <g stroke="#FFD700" stroke-width="2" fill="none">
+    <line x1="50" y1="15" x2="50" y2="25"/>
+    <line x1="35" y1="25" x2="42" y2="32"/>
+    <line x1="65" y1="25" x2="58" y2="32"/>
+    <line x1="25" y1="35" x2="32" y2="42"/>
+    <line x1="75" y1="35" x2="68" y2="42"/>
+    <line x1="20" y1="50" x2="30" y2="50"/>
+    <line x1="70" y1="50" x2="80" y2="50"/>
+  </g>
+  
+  <!-- Sun -->
+  <circle cx="50" cy="50" r="8" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+  
+  <!-- Bird -->
+  <g fill="#1a365d" stroke="#2d5a87" stroke-width="1">
+    <!-- Bird body -->
+    <ellipse cx="50" cy="45" rx="6" ry="8"/>
+    <!-- Bird head -->
+    <circle cx="55" cy="42" r="3"/>
+    <!-- Bird beak -->
+    <path d="M58 42 L60 43 L58 44 Z" fill="#FFD700"/>
+    <!-- Bird wings -->
+    <path d="M45 45 Q40 40 45 35 Q50 40 45 45"/>
+    <path d="M55 45 Q60 40 55 35 Q50 40 55 45"/>
+    <!-- Bird tail -->
+    <path d="M44 50 Q40 55 44 60 Q46 55 44 50"/>
+  </g>
+</svg>
+
+
