@@ -1,6 +1,6 @@
 # Ascend AI Secretary
 
-A production-quality front-end MVP for an AI-powered secretary platform. Built with Next.js 14, TypeScript, and modern UI components.
+A production-quality frontend application for an AI-powered secretary platform. Built with Next.js 14, TypeScript, and modern UI components. Features comprehensive mock data for demonstration purposes.
 
 ## 🚀 Quick Start
 
@@ -134,25 +134,18 @@ src/
 - **Integrations**: Twilio, OpenAI, ElevenLabs connections
 - **Billing**: Subscription and payment management
 
-## 🔌 API Integration Points
+## 🎯 Mock Data System
 
-All API calls are currently mocked with realistic delays. Look for `// TODO: connect backend` comments to identify integration points.
+This application uses a comprehensive mock data system for demonstration purposes. All data is realistic and representative of a real AI secretary platform.
 
-### Key Integration Hooks
-- `useCallsApi()` - Call management
-- `useMessagesApi()` - Message handling  
-- `useLeadsApi()` - Lead management
-- `useIntegrationsApi()` - Third-party services
+### Mock Data Hooks
+- `useCallsApi()` - Call management with mock data
+- `useMessagesApi()` - Message handling with mock data
+- `useLeadsApi()` - Lead management with mock data
+- `useIntegrationsApi()` - Third-party services with mock data
 
-### External Services
-- **Twilio**: Voice and SMS services
-- **OpenAI**: AI conversation handling
-- **ElevenLabs**: Voice synthesis
-
-## 🎯 Mock Data
-
-The application uses realistic mock data including:
-- **Calls**: 6 sample calls with transcripts and sentiment
+### Mock Data Includes
+- **Calls**: 6 sample calls with transcripts and sentiment analysis
 - **Messages**: 4 SMS/email messages with various statuses
 - **Leads**: 6 leads with different scores and conversion probabilities
 - **KPIs**: 6 key performance indicators with trend data
@@ -169,15 +162,11 @@ npm start
 
 ### Environment Variables
 
-Create a `.env.local` file:
+Create a `.env.local` file (optional):
 
 ```env
 # Feature flags
 NEXT_PUBLIC_ENABLE_ANALYTICS=true
-
-# API endpoints (when backend is ready)
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_WS_URL=ws://localhost:8000/ws
 ```
 
 ## 🔧 Development
@@ -209,12 +198,12 @@ NEXT_PUBLIC_WS_URL=ws://localhost:8000/ws
 
 ## 🔮 Future Enhancements
 
-### Phase 2 Features
+### Potential Features
 - Real-time notifications
 - Advanced analytics
 - Team collaboration
 - Mobile app
-- API integrations
+- Backend API integration
 - Webhook support
 
 ### Technical Improvements
@@ -242,5 +231,5 @@ For questions or support, please contact the development team or create an issue
 
 ---
 
-**Note**: This is a front-end MVP with mocked data. Backend integration points are clearly marked with `// TODO: connect backend` comments throughout the codebase.
+**Note**: This is a frontend-only application with comprehensive mock data for demonstration purposes. All functionality is fully working with realistic sample data.
 

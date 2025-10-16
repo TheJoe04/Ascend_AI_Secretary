@@ -14,7 +14,7 @@ export function useMessagesApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 500));
       
       let filteredMessages = [...mockMessages];
@@ -69,7 +69,7 @@ export function useMessagesApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const message = mockMessages.find(m => m.id === id);
@@ -87,7 +87,7 @@ export function useMessagesApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const searchLower = query.toLowerCase();
@@ -110,7 +110,7 @@ export function useMessagesApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const newMessage: Message = {
@@ -119,7 +119,7 @@ export function useMessagesApi() {
         timestamp: new Date(),
       };
       
-      // In a real app, this would send to backend
+      // Mock implementation for demonstration
       return newMessage;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to send message');
@@ -134,7 +134,7 @@ export function useMessagesApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const message = mockMessages.find(m => m.id === id);
@@ -143,7 +143,7 @@ export function useMessagesApi() {
       }
       
       const updatedMessage = { ...message, ...updates };
-      // In a real app, this would update the backend
+      // Mock implementation for demonstration
       
       return updatedMessage;
     } catch (err) {

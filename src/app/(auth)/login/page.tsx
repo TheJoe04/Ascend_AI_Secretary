@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,16 +19,35 @@ export default function LoginPage() {
     password: '',
     code: ''
   });
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     
-    // TODO: connect backend - implement actual authentication
-    setTimeout(() => {
+    try {
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError('Invalid email or password');
+      } else if (result?.ok) {
+        // Check if session is established
+        const session = await getSession();
+        if (session) {
+          router.push('/dashboard');
+        }
+      }
+    } catch (err) {
+      setError('An error occurred during login');
+      console.error('Login error:', err);
+    } finally {
       setIsLoading(false);
-      router.push('/dashboard');
-    }, 1000);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,6 +171,12 @@ export default function LoginPage() {
                 <p className="text-xs text-muted-foreground">
                   We&apos;ll send you a verification code via email
                 </p>
+              </div>
+            )}
+
+            {error && (
+              <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
+                {error}
               </div>
             )}
 

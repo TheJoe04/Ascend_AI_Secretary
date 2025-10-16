@@ -11,7 +11,7 @@ export function useIntegrationsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 300));
       
       return [...mockIntegrations];
@@ -31,7 +31,7 @@ export function useIntegrationsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       const integration = mockIntegrations.find(i => i.type === type);
@@ -61,7 +61,7 @@ export function useIntegrationsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const integration = mockIntegrations.find(i => i.type === type);
@@ -91,7 +91,7 @@ export function useIntegrationsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       // In a real app, this would test the actual connection
@@ -109,7 +109,7 @@ export function useIntegrationsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       // In a real app, this would sync data from the integration

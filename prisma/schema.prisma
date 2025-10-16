@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  twilioNumber String?
+  agentConfig  Json     @default("{}")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  users User[]
+  calls Call[]
+  leads Lead[]
+  messages Message[]
+
+  // Indexes
+  @@index([slug])
+  @@index([createdAt])
+  @@map("organizations")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  password       String
+  role           String   // admin, agent, viewer
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Indexes
+  @@index([email])
+  @@index([organizationId])
+  @@index([role])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model Call {
+  id             String    @id @default(cuid())
+  organizationId String
+  twilioCallSid  String    @unique
+  callerName     String
+  callerNumber   String
+  duration       Int
+  status         String    // answered, missed, voicemail
+  sentiment      String    // positive, neutral, negative
+  timestamp      DateTime
+  transcript     String?
+  recordingUrl   String?
+  tags           String[]
+  notes          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  // Indexes
+  @@index([organizationId])
+  @@index([timestamp])
+  @@index([status])
+  @@index([sentiment])
+  @@index([twilioCallSid])
+  @@map("calls")
+}
+
+model Lead {
+  id                   String    @id @default(cuid())
+  organizationId       String
+  name                 String
+  email                String
+  phone                String
+  company              String?
+  score                String    // Hot, Warm, Cold
+  status               String
+  source               String
+  lastContact          DateTime
+  nextFollowUp         DateTime?
+  notes                String?
+  tags                 String[]
+  calls                Int       @default(0)
+  messages             Int       @default(0)
+  conversionProbability Int
+  hubspotContactId     String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  leadMessages Message[]
+
+  // Indexes
+  @@index([organizationId])
+  @@index([email])
+  @@index([score])
+  @@index([status])
+  @@index([lastContact])
+  @@index([conversionProbability])
+  @@map("leads")
+}
+
+model Message {
+  id             String    @id @default(cuid())
+  organizationId String
+  type           String    // email, sms
+  from           String
+  to             String
+  subject        String?
+  content        String
+  status         String
+  timestamp      DateTime
+  leadId         String?
+  callId         String?
+  tags           String[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  lead         Lead?        @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  // Indexes
+  @@index([organizationId])
+  @@index([type])
+  @@index([status])
+  @@index([timestamp])
+  @@index([leadId])
+  @@index([callId])
+  @@map("messages")
+}

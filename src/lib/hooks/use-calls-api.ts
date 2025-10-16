@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { Call, FilterOptions, PaginationOptions, ApiResponse } from '../types';
-import { mockCalls } from '../mock';
 
 export function useCallsApi() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,53 +13,30 @@ export function useCallsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Build URL with query parameters
+      const params = new URLSearchParams();
       
-      let filteredCalls = [...mockCalls];
-      
-      // Apply filters
-      if (filters?.search) {
-        const search = filters.search.toLowerCase();
-        filteredCalls = filteredCalls.filter(call =>
-          call.callerName.toLowerCase().includes(search) ||
-          call.callerNumber.includes(search) ||
-          call.transcript?.toLowerCase().includes(search)
-        );
-      }
-      
+      if (pagination?.page) params.append('page', pagination.page.toString());
+      if (pagination?.limit) params.append('limit', pagination.limit.toString());
+      if (filters?.search) params.append('search', filters.search);
       if (filters?.status && filters.status.length > 0) {
-        filteredCalls = filteredCalls.filter(call =>
-          filters.status!.includes(call.status)
-        );
+        params.append('status', filters.status.join(','));
       }
-      
       if (filters?.sentiment && filters.sentiment.length > 0) {
-        filteredCalls = filteredCalls.filter(call =>
-          filters.sentiment!.includes(call.sentiment)
-        );
+        params.append('sentiment', filters.sentiment.join(','));
       }
       
-      if (filters?.dateRange) {
-        filteredCalls = filteredCalls.filter(call => {
-          const callDate = new Date(call.timestamp);
-          return callDate >= filters.dateRange!.start && 
-                 callDate <= filters.dateRange!.end;
-        });
+      const response = await fetch(`/api/calls?${params.toString()}`);
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Unauthorized');
+        }
+        throw new Error('Failed to fetch calls');
       }
       
-      // Apply pagination
-      const page = pagination?.page || 1;
-      const limit = pagination?.limit || 10;
-      const start = (page - 1) * limit;
-      const paginatedCalls = filteredCalls.slice(start, start + limit);
-      
-      return {
-        data: paginatedCalls,
-        total: filteredCalls.length,
-        page,
-        limit
-      };
+      const data = await response.json();
+      return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch calls');
       throw err;
@@ -74,11 +50,20 @@ export function useCallsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 300));
+      const response = await fetch(`/api/calls/${id}`);
       
-      const call = mockCalls.find(c => c.id === id);
-      return call || null;
+      if (!response.ok) {
+        if (response.status === 404) {
+          return null;
+        }
+        if (response.status === 401) {
+          throw new Error('Unauthorized');
+        }
+        throw new Error('Failed to fetch call');
+      }
+      
+      const data = await response.json();
+      return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch call');
       throw err;
@@ -92,15 +77,20 @@ export function useCallsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 300));
+      const params = new URLSearchParams();
+      params.append('search', query);
       
-      const searchLower = query.toLowerCase();
-      return mockCalls.filter(call =>
-        call.callerName.toLowerCase().includes(searchLower) ||
-        call.callerNumber.includes(searchLower) ||
-        call.transcript?.toLowerCase().includes(searchLower)
-      );
+      const response = await fetch(`/api/calls?${params.toString()}`);
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Unauthorized');
+        }
+        throw new Error('Search failed');
+      }
+      
+      const data = await response.json();
+      return data.data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Search failed');
       throw err;
@@ -114,18 +104,26 @@ export function useCallsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const response = await fetch(`/api/calls/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updates),
+      });
       
-      const call = mockCalls.find(c => c.id === id);
-      if (!call) {
-        throw new Error('Call not found');
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('Call not found');
+        }
+        if (response.status === 401) {
+          throw new Error('Unauthorized');
+        }
+        throw new Error('Failed to update call');
       }
       
-      const updatedCall = { ...call, ...updates };
-      // In a real app, this would update the backend
-      
-      return updatedCall;
+      const data = await response.json();
+      return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update call');
       throw err;

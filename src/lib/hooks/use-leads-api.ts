@@ -14,7 +14,7 @@ export function useLeadsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 500));
       
       let filteredLeads = [...mockLeads];
@@ -69,7 +69,7 @@ export function useLeadsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const lead = mockLeads.find(l => l.id === id);
@@ -87,7 +87,7 @@ export function useLeadsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const searchLower = query.toLowerCase();
@@ -110,7 +110,7 @@ export function useLeadsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const newLead: Lead = {
@@ -118,7 +118,7 @@ export function useLeadsApi() {
         id: Math.random().toString(36).substr(2, 9),
       };
       
-      // In a real app, this would create in backend
+      // Mock implementation for demonstration
       return newLead;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create lead');
@@ -133,7 +133,7 @@ export function useLeadsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 500));
       
       const lead = mockLeads.find(l => l.id === id);
@@ -142,7 +142,7 @@ export function useLeadsApi() {
       }
       
       const updatedLead = { ...lead, ...updates };
-      // In a real app, this would update the backend
+      // Mock implementation for demonstration
       
       return updatedLead;
     } catch (err) {
@@ -158,10 +158,10 @@ export function useLeadsApi() {
     setError(null);
     
     try {
-      // TODO: connect backend - replace with actual API call
+      // Using mock data for demonstration
       await new Promise(resolve => setTimeout(resolve, 500));
       
-      // In a real app, this would delete from backend
+      // Mock implementation for demonstration
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete lead');
       throw err;

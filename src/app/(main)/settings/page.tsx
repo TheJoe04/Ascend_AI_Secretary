@@ -45,7 +45,7 @@ export default function SettingsPage() {
   const handleConnect = async (type: string) => {
     setIsLoading(true);
     try {
-      // TODO: connect backend - replace with actual integration
+      // Using mock integration for demonstration
       await connect(type as any, { apiKey: 'mock-api-key' });
       await loadIntegrations();
     } catch (err) {
