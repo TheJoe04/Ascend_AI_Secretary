@@ -266,10 +266,6 @@ export default function SettingsPage() {
                 <label className="text-sm font-medium">OpenAI API Key</label>
                 <Input type="password" placeholder="sk-..." />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">ElevenLabs API Key</label>
-                <Input type="password" placeholder="••••••••" />
-              </div>
               <Button>Save API Keys</Button>
             </CardContent>
           </Card>

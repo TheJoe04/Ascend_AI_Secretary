@@ -1,30 +1,25 @@
 import { create } from 'zustand';
-import { Call, Message, Lead, FilterOptions, PaginationOptions } from '../types';
-import { mockCalls, mockMessages, mockLeads } from '../mock';
+import { Call, Lead, FilterOptions, PaginationOptions } from '../types';
+import { mockCalls, mockLeads } from '../mock';
 
 interface DataState {
   // Data
   calls: Call[];
-  messages: Message[];
   leads: Lead[];
   
   // Filters
   callFilters: FilterOptions;
-  messageFilters: FilterOptions;
   leadFilters: FilterOptions;
   
   // Pagination
   callPagination: PaginationOptions;
-  messagePagination: PaginationOptions;
   leadPagination: PaginationOptions;
   
   // Actions
   setCallFilters: (filters: Partial<FilterOptions>) => void;
-  setMessageFilters: (filters: Partial<FilterOptions>) => void;
   setLeadFilters: (filters: Partial<FilterOptions>) => void;
   
   setCallPagination: (pagination: Partial<PaginationOptions>) => void;
-  setMessagePagination: (pagination: Partial<PaginationOptions>) => void;
   setLeadPagination: (pagination: Partial<PaginationOptions>) => void;
   
   // Data actions
@@ -32,21 +27,15 @@ interface DataState {
   updateCall: (id: string, updates: Partial<Call>) => void;
   deleteCall: (id: string) => void;
   
-  addMessage: (message: Message) => void;
-  updateMessage: (id: string, updates: Partial<Message>) => void;
-  deleteMessage: (id: string) => void;
-  
   addLead: (lead: Lead) => void;
   updateLead: (id: string, updates: Partial<Lead>) => void;
   deleteLead: (id: string) => void;
   
   // Computed getters
   getFilteredCalls: () => Call[];
-  getFilteredMessages: () => Message[];
   getFilteredLeads: () => Lead[];
   
   getPaginatedCalls: () => Call[];
-  getPaginatedMessages: () => Message[];
   getPaginatedLeads: () => Lead[];
 }
 
@@ -61,17 +50,14 @@ const defaultPagination: PaginationOptions = {
 export const useDataStore = create<DataState>((set, get) => ({
   // Initial data
   calls: mockCalls,
-  messages: mockMessages,
   leads: mockLeads,
   
   // Filters
   callFilters: defaultFilters,
-  messageFilters: defaultFilters,
   leadFilters: defaultFilters,
   
   // Pagination
   callPagination: defaultPagination,
-  messagePagination: defaultPagination,
   leadPagination: defaultPagination,
   
   // Filter actions
@@ -80,10 +66,6 @@ export const useDataStore = create<DataState>((set, get) => ({
       callFilters: { ...state.callFilters, ...filters },
     })),
   
-  setMessageFilters: (filters) =>
-    set((state) => ({
-      messageFilters: { ...state.messageFilters, ...filters },
-    })),
   
   setLeadFilters: (filters) =>
     set((state) => ({
@@ -96,10 +78,6 @@ export const useDataStore = create<DataState>((set, get) => ({
       callPagination: { ...state.callPagination, ...pagination },
     })),
   
-  setMessagePagination: (pagination) =>
-    set((state) => ({
-      messagePagination: { ...state.messagePagination, ...pagination },
-    })),
   
   setLeadPagination: (pagination) =>
     set((state) => ({
@@ -124,23 +102,6 @@ export const useDataStore = create<DataState>((set, get) => ({
       calls: state.calls.filter((call) => call.id !== id),
     })),
   
-  // Message actions
-  addMessage: (message) =>
-    set((state) => ({
-      messages: [message, ...state.messages],
-    })),
-  
-  updateMessage: (id, updates) =>
-    set((state) => ({
-      messages: state.messages.map((message) =>
-        message.id === id ? { ...message, ...updates } : message
-      ),
-    })),
-  
-  deleteMessage: (id) =>
-    set((state) => ({
-      messages: state.messages.filter((message) => message.id !== id),
-    })),
   
   // Lead actions
   addLead: (lead) =>
@@ -199,40 +160,6 @@ export const useDataStore = create<DataState>((set, get) => ({
     });
   },
   
-  getFilteredMessages: () => {
-    const state = get();
-    const { messages, messageFilters } = state;
-    
-    return messages.filter((message) => {
-      if (messageFilters.search) {
-        const search = messageFilters.search.toLowerCase();
-        if (
-          !message.from.toLowerCase().includes(search) &&
-          !message.to.toLowerCase().includes(search) &&
-          !message.content.toLowerCase().includes(search) &&
-          !message.subject?.toLowerCase().includes(search)
-        ) {
-          return false;
-        }
-      }
-      
-      if (messageFilters.type && messageFilters.type.length > 0) {
-        if (!messageFilters.type.includes(message.type)) return false;
-      }
-      
-      if (messageFilters.dateRange) {
-        const messageDate = new Date(message.timestamp);
-        if (
-          messageDate < messageFilters.dateRange.start ||
-          messageDate > messageFilters.dateRange.end
-        ) {
-          return false;
-        }
-      }
-      
-      return true;
-    });
-  },
   
   getFilteredLeads: () => {
     const state = get();
@@ -290,26 +217,6 @@ export const useDataStore = create<DataState>((set, get) => ({
     return sorted.slice(start, start + limit);
   },
   
-  getPaginatedMessages: () => {
-    const state = get();
-    const filteredMessages = state.getFilteredMessages();
-    const { page, limit, sortBy, sortOrder } = state.messagePagination;
-    
-    // Sort
-    const sorted = [...filteredMessages].sort((a, b) => {
-      const aVal = a[sortBy as keyof Message];
-      const bVal = b[sortBy as keyof Message];
-      
-      if (aVal == null || bVal == null) return 0;
-      if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
-    
-    // Paginate
-    const start = (page - 1) * limit;
-    return sorted.slice(start, start + limit);
-  },
   
   getPaginatedLeads: () => {
     const state = get();

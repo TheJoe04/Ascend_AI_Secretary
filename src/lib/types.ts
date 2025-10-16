@@ -4,11 +4,8 @@ export type CallStatus = 'answered' | 'missed' | 'voicemail';
 
 export type LeadScore = 'Cold' | 'Warm' | 'Hot';
 
-export type MessageType = 'sms' | 'email';
 
-export type MessageStatus = 'sent' | 'delivered' | 'read' | 'failed';
-
-export type IntegrationType = 'twilio' | 'openai' | 'elevenlabs';
+export type IntegrationType = 'twilio' | 'openai';
 
 export interface Call {
   id: string;
@@ -24,19 +21,6 @@ export interface Call {
   notes?: string;
 }
 
-export interface Message {
-  id: string;
-  type: MessageType;
-  from: string;
-  to: string;
-  subject?: string;
-  content: string;
-  status: MessageStatus;
-  timestamp: Date;
-  leadId?: string;
-  callId?: string;
-  tags: string[];
-}
 
 export interface Lead {
   id: string;
@@ -52,7 +36,6 @@ export interface Lead {
   notes: string;
   tags: string[];
   calls: number;
-  messages: number;
   conversionProbability: number; // 0-100
 }
 
@@ -99,7 +82,6 @@ export interface FilterOptions {
   status?: string[];
   sentiment?: Sentiment[];
   score?: LeadScore[];
-  type?: MessageType[];
 }
 
 export interface PaginationOptions {

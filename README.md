@@ -68,7 +68,6 @@ src/
 │   ├── (main)/            # Main app route group
 │   │   ├── dashboard/     # Dashboard page
 │   │   ├── calls/         # Calls management
-│   │   ├── messages/      # Messages inbox
 │   │   ├── leads/         # Leads management
 │   │   └── settings/      # Settings page
 │   ├── globals.css        # Global styles
@@ -117,9 +116,6 @@ src/
 - **Status Tracking**: Answered, missed, voicemail status
 - **Sentiment Analysis**: Positive, neutral, negative classification
 
-### Messages
-- **Inbox**: SMS and email message management
-- **Composer**: Message creation interface
 - **Status Tracking**: Sent, delivered, read status
 
 ### Leads
@@ -131,22 +127,26 @@ src/
 ### Settings
 - **General**: Company settings, timezone, business hours
 - **Team**: User management and permissions
-- **Integrations**: Twilio, OpenAI, ElevenLabs connections
+- **Integrations**: Twilio, OpenAI connections
 - **Billing**: Subscription and payment management
 
 ## 🎯 Mock Data System
 
 This application uses a comprehensive mock data system for demonstration purposes. All data is realistic and representative of a real AI secretary platform.
 
-### Mock Data Hooks
-- `useCallsApi()` - Call management with mock data
-- `useMessagesApi()` - Message handling with mock data
-- `useLeadsApi()` - Lead management with mock data
-- `useIntegrationsApi()` - Third-party services with mock data
+### Key Integration Hooks
+- `useCallsApi()` - Call management
+- `useLeadsApi()` - Lead management
+- `useIntegrationsApi()` - Third-party services
 
-### Mock Data Includes
+### External Services
+- **Twilio**: Voice and SMS services
+- **OpenAI**: AI conversation handling
+
+## 🎯 Mock Data
+
+The application uses realistic mock data including:
 - **Calls**: 6 sample calls with transcripts and sentiment analysis
-- **Messages**: 4 SMS/email messages with various statuses
 - **Leads**: 6 leads with different scores and conversion probabilities
 - **KPIs**: 6 key performance indicators with trend data
 - **Charts**: 15 days of call data, sentiment distribution, funnel stages
@@ -187,6 +187,29 @@ NEXT_PUBLIC_ENABLE_ANALYTICS=true
 - **Desktop**: Full sidebar navigation
 - **Tablet**: Collapsible sidebar
 - **Mobile**: Bottom navigation (planned)
+
+## 🗄️ Backend Integration
+
+### Database
+- **PostgreSQL** - Production database
+- **Prisma ORM** - Type-safe database client
+- **Multi-tenant** - Organization-based data isolation
+
+### Authentication
+- **NextAuth.js v5** - Secure authentication
+- **Credentials Provider** - Email/password login
+- **JWT Sessions** - Stateless authentication
+- **Route Protection** - Middleware-based auth
+
+### API Routes
+- `/api/auth/*` - Authentication endpoints
+- `/api/calls` - Call management CRUD
+- `/api/calls/start` - ElevenLabs voice agent integration
+- `/api/leads` - Lead management CRUD
+- `/api/analytics` - Dashboard KPIs
+
+### Database Setup
+See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for complete instructions.
 
 ## ♿ Accessibility
 

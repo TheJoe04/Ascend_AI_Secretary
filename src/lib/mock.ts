@@ -1,4 +1,4 @@
-import { Call, Message, Lead, KPI, IntegrationStatus, Notification, ChartDataPoint, SentimentData, FunnelStage } from './types';
+import { Call, Lead, KPI, IntegrationStatus, Notification, ChartDataPoint, SentimentData, FunnelStage } from './types';
 
 // Mock Calls Data
 export const mockCalls: Call[] = [
@@ -75,59 +75,6 @@ export const mockCalls: Call[] = [
   }
 ];
 
-// Mock Messages Data
-export const mockMessages: Message[] = [
-  {
-    id: '1',
-    type: 'email',
-    from: 'john.smith@company.com',
-    to: 'sales@ascendai.com',
-    subject: 'Re: AI Secretary Demo',
-    content: 'Thanks for the demo yesterday. I\'d like to schedule a call with our team to discuss implementation.',
-    status: 'read',
-    timestamp: new Date('2024-01-15T08:45:00Z'),
-    leadId: '1',
-    callId: '1',
-    tags: ['follow-up', 'implementation']
-  },
-  {
-    id: '2',
-    type: 'sms',
-    from: '+1 (555) 234-5678',
-    to: '+1 (555) 000-0000',
-    content: 'Hi, I missed your call earlier. Can you call me back at 3 PM?',
-    status: 'delivered',
-    timestamp: new Date('2024-01-15T12:30:00Z'),
-    leadId: '2',
-    callId: '2',
-    tags: ['callback']
-  },
-  {
-    id: '3',
-    type: 'email',
-    from: 'mike.davis@startup.io',
-    to: 'sales@ascendai.com',
-    subject: 'Contract Review',
-    content: 'Our legal team has reviewed the contract. We\'re ready to move forward. When can we schedule the kickoff?',
-    status: 'read',
-    timestamp: new Date('2024-01-14T17:30:00Z'),
-    leadId: '3',
-    callId: '3',
-    tags: ['contract', 'ready-to-close']
-  },
-  {
-    id: '4',
-    type: 'sms',
-    from: '+1 (555) 456-7890',
-    to: '+1 (555) 000-0000',
-    content: 'Thanks for calling back. I\'ll have our team ready for the demo tomorrow at 2 PM.',
-    status: 'read',
-    timestamp: new Date('2024-01-14T13:45:00Z'),
-    leadId: '4',
-    callId: '4',
-    tags: ['demo', 'scheduled']
-  }
-];
 
 // Mock Leads Data
 export const mockLeads: Lead[] = [
@@ -145,7 +92,6 @@ export const mockLeads: Lead[] = [
     notes: 'Very interested in pricing, follow up in 2 days',
     tags: ['enterprise', 'pricing'],
     calls: 2,
-    messages: 1,
     conversionProbability: 75
   },
   {
@@ -162,7 +108,6 @@ export const mockLeads: Lead[] = [
     notes: 'Called twice today, no answer. Try different time',
     tags: ['agency', 'referral'],
     calls: 2,
-    messages: 1,
     conversionProbability: 30
   },
   {
@@ -179,7 +124,6 @@ export const mockLeads: Lead[] = [
     notes: 'Ready to move forward, send contract immediately',
     tags: ['startup', 'ready-to-buy'],
     calls: 3,
-    messages: 2,
     conversionProbability: 95
   },
   {
@@ -196,7 +140,6 @@ export const mockLeads: Lead[] = [
     notes: 'Large enterprise prospect, high value',
     tags: ['enterprise', 'high-value'],
     calls: 1,
-    messages: 1,
     conversionProbability: 65
   },
   {
@@ -213,7 +156,6 @@ export const mockLeads: Lead[] = [
     notes: 'Price sensitive, needs custom solution. Follow up with pricing options',
     tags: ['price-sensitive', 'custom'],
     calls: 1,
-    messages: 0,
     conversionProbability: 25
   },
   {
@@ -230,7 +172,6 @@ export const mockLeads: Lead[] = [
     notes: 'High priority - ready to close, team is excited',
     tags: ['urgent', 'ready-to-buy'],
     calls: 2,
-    messages: 1,
     conversionProbability: 90
   }
 ];
@@ -255,14 +196,6 @@ export const mockKPIs: KPI[] = [
   },
   {
     id: '3',
-    title: 'Messages Sent',
-    value: 47,
-    delta: 8,
-    deltaType: 'increase',
-    format: 'number'
-  },
-  {
-    id: '4',
     title: 'Conversion Rate',
     value: 23.5,
     delta: 5.2,
@@ -270,7 +203,7 @@ export const mockKPIs: KPI[] = [
     format: 'percentage'
   },
   {
-    id: '5',
+    id: '4',
     title: 'Revenue This Month',
     value: 45680,
     delta: 15.3,
@@ -278,7 +211,7 @@ export const mockKPIs: KPI[] = [
     format: 'currency'
   },
   {
-    id: '6',
+    id: '5',
     title: 'Avg Call Duration',
     value: 180,
     delta: -8,
@@ -302,12 +235,6 @@ export const mockIntegrations: IntegrationStatus[] = [
     connected: true,
     lastSync: new Date('2024-01-15T16:25:00Z'),
     config: { model: 'gpt-4', temperature: 0.7 }
-  },
-  {
-    type: 'elevenlabs',
-    name: 'ElevenLabs Voice',
-    connected: false,
-    config: { voiceId: 'rachel', stability: 0.5 }
   }
 ];
 
@@ -320,14 +247,6 @@ export const mockNotifications: Notification[] = [
     type: 'info',
     timestamp: new Date('2024-01-15T16:45:00Z'),
     read: false
-  },
-  {
-    id: '2',
-    title: 'Integration Issue',
-    message: 'ElevenLabs connection failed. Please check your API key.',
-    type: 'warning',
-    timestamp: new Date('2024-01-15T15:30:00Z'),
-    read: true
   },
   {
     id: '3',

@@ -20,7 +20,6 @@ import { Button } from "@/components/ui/button";
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Calls', href: '/calls', icon: Phone },
-  { name: 'Messages', href: '/messages', icon: MessageSquare },
   { name: 'Leads', href: '/leads', icon: Users },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
@@ -100,13 +99,6 @@ export function NavSidebar() {
                 <span className="flex items-center gap-1">
                   <div className="h-2 w-2 rounded-full bg-green-500" />
                   <span className="text-green-600">Connected</span>
-                </span>
-              </div>
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">ElevenLabs</span>
-                <span className="flex items-center gap-1">
-                  <div className="h-2 w-2 rounded-full bg-red-500" />
-                  <span className="text-red-600">Disconnected</span>
                 </span>
               </div>
             </div>
