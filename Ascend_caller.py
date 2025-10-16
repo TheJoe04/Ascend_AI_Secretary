@@ -5,12 +5,36 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-XI_API_KEY  = # xi-...
-AGENT_ID    = # agent_...
-PHONE_ID    = # pn_... (NOT a phone number)
+XI_API_KEY  =   # xi-...
+AGENT_ID    =     # agent_...
+PHONE_ID    =   # pn_... (NOT a phone number)
 BASE_URL    = "https://api.elevenlabs.io"
 
 HEADERS = {"xi-api-key": XI_API_KEY, "content-type": "application/json"}
+
+def call_multiple_numbers(numbers: list[str], start_message: str):
+    """
+    Calls each number sequentially with a 1-minute buffer between calls.
+    Prints summary for each.
+    """
+    for i, num in enumerate(numbers, start=1):
+        print(f"\n=== [{i}/{len(numbers)}] Calling {num} ===")
+        try:
+            conv_id = start_voice_agent_call(num, start_message)
+            print(f"Conversation ID: {conv_id}")
+
+            # Wait for call completion
+            result = wait_until_done(conv_id, max_wait=600, interval=5)
+
+            # Print summary for this call
+            print_final_info(result)
+        except Exception as e:
+            print(f"Error calling {num}: {e}")
+
+        # Wait 1 minute between calls
+        if i < len(numbers):
+            print("\nWaiting 1 minute before next call...\n")
+            time.sleep(60)
 
 def start_voice_agent_call(to_number: str, start_message: str) -> str:
     """
@@ -89,16 +113,20 @@ def print_final_info(conv: dict):
         print(summary)
 
 def main():
-    # 1) start a call
-    to_number = "+15593289806"      # must be E.164
-    opener    = "Hello, this is Ascend. Do you have 30 seconds for a quick intro?"
-    conv_id   = start_voice_agent_call(to_number, opener)
+    # # 1) start a call
+    # to_number = "+15593289806"      # must be E.164
+    # opener    = "Hello, this is Ascend. Do you have 30 seconds for a quick intro?"
+    # conv_id   = start_voice_agent_call(to_number, opener)
 
-    # 2) wait for completion
-    final_conv = wait_until_done(conv_id, max_wait=600, interval=5)
+    # # 2) wait for completion
+    # final_conv = wait_until_done(conv_id, max_wait=600, interval=5)
 
-    # 3) print details
-    print_final_info(final_conv)
+    # # 3) print details
+    # print_final_info(final_conv)
+
+    lead_numbers = ["+15593289806", "+18312871621"]
+    opener = "Hello, this is Ascend. I wanted to reach out about our new product demo."
+    call_multiple_numbers(lead_numbers, opener)
 
 if __name__ == "__main__":
     if not XI_API_KEY or not AGENT_ID or not PHONE_ID:
