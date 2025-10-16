@@ -17,8 +17,6 @@ NEXT_PUBLIC_WS_URL=ws://localhost:8000/ws
 NEXT_PUBLIC_ENABLE_ANALYTICS=true
 
 # Integration API Keys
-ELEVENLABS_API_KEY=your_elevenlabs_key
-ELEVENLABS_VOICE_ID=your_voice_id
 OPENAI_API_KEY=your_openai_key
 TWILIO_ACCOUNT_SID=your_twilio_sid
 TWILIO_AUTH_TOKEN=your_twilio_token
@@ -53,26 +51,6 @@ CREATE TABLE calls (
 );
 ```
 
-### Messages Table
-```sql
-CREATE TABLE messages (
-  id VARCHAR(255) PRIMARY KEY,
-  type ENUM('sms', 'email') NOT NULL,
-  from_address VARCHAR(255) NOT NULL,
-  to_address VARCHAR(255) NOT NULL,
-  subject VARCHAR(500),
-  content TEXT NOT NULL,
-  status ENUM('sent', 'delivered', 'read', 'failed') NOT NULL,
-  timestamp TIMESTAMP NOT NULL,
-  lead_id VARCHAR(255),
-  call_id VARCHAR(255),
-  tags JSON,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (lead_id) REFERENCES leads(id),
-  FOREIGN KEY (call_id) REFERENCES calls(id)
-);
-```
 
 ### Leads Table
 ```sql
@@ -90,7 +68,6 @@ CREATE TABLE leads (
   notes TEXT,
   tags JSON,
   calls_count INTEGER DEFAULT 0,
-  messages_count INTEGER DEFAULT 0,
   conversion_probability INTEGER DEFAULT 0, -- 0-100
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -101,7 +78,7 @@ CREATE TABLE leads (
 ```sql
 CREATE TABLE integrations (
   id VARCHAR(255) PRIMARY KEY,
-  type ENUM('twilio', 'openai', 'elevenlabs') NOT NULL,
+  type ENUM('twilio', 'openai') NOT NULL,
   name VARCHAR(255) NOT NULL,
   connected BOOLEAN DEFAULT FALSE,
   last_sync TIMESTAMP,
@@ -138,15 +115,6 @@ GET    /calls/search?q=query    # Search calls
 - `sort_by` - Sort field (timestamp, duration, caller_name)
 - `sort_order` - Sort direction (asc, desc)
 
-### Messages Endpoints
-```
-GET    /messages                # List messages with filters/pagination
-GET    /messages/:id           # Get specific message
-POST   /messages               # Send new message
-PUT    /messages/:id           # Update message
-DELETE /messages/:id           # Delete message
-GET    /messages/search?q=query # Search messages
-```
 
 ### Leads Endpoints
 ```
@@ -196,7 +164,6 @@ All API responses should follow this format:
 1. **Rename the current hooks:**
    ```bash
    mv src/lib/hooks/use-calls-api.ts src/lib/hooks/use-calls-api-mock.ts
-   mv src/lib/hooks/use-messages-api.ts src/lib/hooks/use-messages-api-mock.ts
    mv src/lib/hooks/use-leads-api.ts src/lib/hooks/use-leads-api-mock.ts
    mv src/lib/hooks/use-integrations-api.ts src/lib/hooks/use-integrations-api-mock.ts
    ```

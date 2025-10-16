@@ -68,7 +68,6 @@ src/
 │   ├── (main)/            # Main app route group
 │   │   ├── dashboard/     # Dashboard page
 │   │   ├── calls/         # Calls management
-│   │   ├── messages/      # Messages inbox
 │   │   ├── leads/         # Leads management
 │   │   └── settings/      # Settings page
 │   ├── globals.css        # Global styles
@@ -117,9 +116,6 @@ src/
 - **Status Tracking**: Answered, missed, voicemail status
 - **Sentiment Analysis**: Positive, neutral, negative classification
 
-### Messages
-- **Inbox**: SMS and email message management
-- **Composer**: Message creation interface
 - **Status Tracking**: Sent, delivered, read status
 
 ### Leads
@@ -131,7 +127,7 @@ src/
 ### Settings
 - **General**: Company settings, timezone, business hours
 - **Team**: User management and permissions
-- **Integrations**: Twilio, OpenAI, ElevenLabs connections
+- **Integrations**: Twilio, OpenAI connections
 - **Billing**: Subscription and payment management
 
 ## 🔌 API Integration Points
@@ -140,20 +136,17 @@ All API calls are currently mocked with realistic delays. Look for `// TODO: con
 
 ### Key Integration Hooks
 - `useCallsApi()` - Call management
-- `useMessagesApi()` - Message handling  
 - `useLeadsApi()` - Lead management
 - `useIntegrationsApi()` - Third-party services
 
 ### External Services
 - **Twilio**: Voice and SMS services
 - **OpenAI**: AI conversation handling
-- **ElevenLabs**: Voice synthesis
 
 ## 🎯 Mock Data
 
 The application uses realistic mock data including:
 - **Calls**: 6 sample calls with transcripts and sentiment
-- **Messages**: 4 SMS/email messages with various statuses
 - **Leads**: 6 leads with different scores and conversion probabilities
 - **KPIs**: 6 key performance indicators with trend data
 - **Charts**: 15 days of call data, sentiment distribution, funnel stages

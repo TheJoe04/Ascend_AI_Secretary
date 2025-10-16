@@ -5,9 +5,10 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-XI_API_KEY  =   # xi-...
-AGENT_ID    =     # agent_...
-PHONE_ID    =   # pn_... (NOT a phone number)
+XI_API_KEY  =   "sk_386fa603c3974b4a0c087c34189a4259e2f931fa295be782"
+AGENT_ID    =   "agent_1501k6j0msvzf9583gyrr43s75eb"
+
+PHONE_ID    =   "phnum_4601k7p4xvxkf4csxyd2n59a7bf2"
 BASE_URL    = "https://api.elevenlabs.io"
 
 HEADERS = {"xi-api-key": XI_API_KEY, "content-type": "application/json"}
@@ -34,7 +35,7 @@ def call_multiple_numbers(numbers: list[str], start_message: str):
         # Wait 1 minute between calls
         if i < len(numbers):
             print("\nWaiting 1 minute before next call...\n")
-            time.sleep(60)
+            time.sleep(15)
 
 def start_voice_agent_call(to_number: str, start_message: str) -> str:
     """
@@ -125,7 +126,7 @@ def main():
     # print_final_info(final_conv)
 
     lead_numbers = ["+15593289806", "+18312871621"]
-    opener = "Hello, this is Ascend. I wanted to reach out about our new product demo."
+    opener = "Hello, this is . I wanted to reach out about our new product demo."
     call_multiple_numbers(lead_numbers, opener)
 
 if __name__ == "__main__":
